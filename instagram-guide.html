@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            aspect-ratio: 9/16;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            background: linear-gradient(180deg, #1a0000 0%, #000000 100%);
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide h1 {
+            font-size: 48px;
+            font-weight: 900;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1.2;
+        }
+
+        .slide h2 {
+            font-size: 36px;
+            font-weight: 800;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .slide p {
+            font-size: 18px;
+            color: #ddd;
+            text-align: center;
+            line-height: 1.6;
+            max-width: 350px;
+        }
+
+        .accent {
+            color: #ff0033;
+            font-weight: 900;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            max-width: 350px;
+            margin-top: 40px;
+        }
+
+        .stat-box {
+            background: rgba(0,0,0,0.5);
+            border: 3px solid #ff0033;
+            border-radius: 15px;
+            padding: 25px 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 42px;
+            font-weight: 900;
+            color: #ff0033;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .step-number {
+            font-size: 80px;
+            font-weight: 900;
+            color: #ff0033;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(255,0,51,0.5);
+        }
+
+        .step-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .step-content {
+            font-size: 18px;
+            color: #ddd;
+            text-align: center;
+            line-height: 1.8;
+            max-width: 320px;
+        }
+
+        .cta-button {
+            background: #ff0033;
+            color: #fff;
+            padding: 18px 45px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-top: 30px;
+            cursor: pointer;
+            border: none;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(255,0,51,0.4);
+        }
+
+        .navigation {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-dot.active {
+            background: #ff0033;
+            width: 30px;
+            border-radius: 5px;
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 40px;
+            color: rgba(255,255,255,0.5);
+            cursor: pointer;
+            user-select: none;
+            z-index: 100;
+            padding: 20px;
+            transition: color 0.3s;
+        }
+
+        .arrow:hover {
+            color: #ff0033;
+        }
+
+        .arrow-left {
+            left: 10px;
+        }
+
+        .arrow-right {
+            right: 10px;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                max-width: 100%;
+                border-radius: 0;
+            }
+
+            .slide h1 {
+                font-size: 36px;
+            }
+
+            .slide h2 {
+                font-size: 28px;
+            }
+
+            .step-number {
+                font-size: 60px;
+            }
+
+            .step-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>Stop Making <span class="accent">Sense</span></h1>
+            <h1>Start <span class="accent">Connecting</span></h1>
+            <p style="margin-top: 30px;">The #1 Secret That Separates Great Game From "Meh"</p>
+        </div>
+
+        <!-- Slide 2: Stats -->
+        <div class="slide">
+            <h2>The <span class="accent">Problem</span></h2>
+            <div class="stats-container">
+                <div class="stat-box">
+                    <div class="stat-number">90%</div>
+                    <div class="stat-label">Too Literal</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Chemistry</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">Boring Answer</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Missed Chances</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Step 1 -->
+        <div class="slide">
+            <div class="step-number">01</div>
+            <div class="step-title">The Mistake</div>
+            <div class="step-content">
+                She asks: "Where are you from?" You answer with just the city name. Boring. You just killed the vibe by being too literal.
+            </div>
+        </div>
+
+        <!-- Slide 4: Step 2 -->
+        <div class="slide">
+            <div class="step-number">02</div>
+            <div class="step-title">The Truth</div>
+            <div class="step-content">
+                Connection beats logic. A playful joke or well-timed touch creates more chemistry than any factual answer ever will.
+            </div>
+        </div>
+
+        <!-- Slide 5: Step 3 -->
+        <div class="slide">
+            <div class="step-number">03</div>
+            <div class="step-title">Be Playful</div>
+            <div class="step-content">
+                Every question is an opportunity to flirt. Use it to create tension, make her laugh, and build attraction instead of just sharing facts.
+            </div>
+        </div>
+
+        <!-- Slide 6: Step 4 -->
+        <div class="slide">
+            <div class="step-number">04</div>
+            <div class="step-title">Don't Fear Creepy</div>
+            <div class="step-content">
+                Most men stay boring because they're scared of crossing lines. But calibrated playfulness and organic touch are never creepy.
+            </div>
+        </div>
+
+        <!-- Slide 7: Step 5 -->
+        <div class="slide">
+            <div class="step-number">05</div>
+            <div class="step-title">Sacrifice Sense</div>
+            <div class="step-content">
+                Great game means letting go of making perfect sense. Choose connection over correctness. That's what separates legends from the rest.
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="arrow arrow-left">‹</div>
+        <div class="arrow arrow-right">›</div>
+        <div class="navigation">
+            <div class="nav-dot active"></div>
+            <div class="nav-dot"></div>
+            <div class="nav-dot"></div>
+            <div class="nav-dot"></div>
+            <div class="nav-dot"></div>
+            <div class="nav-dot"></div>
+            <div class="nav-dot"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.nav-dot');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        document.querySelector('.arrow-right').addEventListener('click', nextSlide);
+        document.querySelector('.arrow-left').addEventListener('click', prevSlide);
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                showSlide(currentSlide);
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Touch swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.querySelector('.container').addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.querySelector('.container').addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) nextSlide();
+            if (touchEndX - touchStartX > 50) prevSlide();
+        });
+    </script>
+</body>
+</html>
