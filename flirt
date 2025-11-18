@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connection Over Logic - Dating Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            aspect-ratio: 9/16;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            background: linear-gradient(180deg, #2a0000 0%, #000000 100%);
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide h1 {
+            font-size: 48px;
+            font-weight: 900;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1.2;
+        }
+
+        .slide h2 {
+            font-size: 36px;
+            font-weight: 800;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .slide p {
+            font-size: 18px;
+            color: #ddd;
+            text-align: center;
+            line-height: 1.6;
+            max-width: 350px;
+        }
+
+        .accent {
+            color: #ff0033;
+            font-weight: 900;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            max-width: 350px;
+            margin-top: 40px;
+        }
+
+        .stat-box {
+            background: rgba(0,0,0,0.5);
+            border: 3px solid #ff0033;
+            border-radius: 15px;
+            padding: 25px 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 42px;
+            font-weight: 900;
+            color: #ff0033;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .step-number {
+            font-size: 80px;
+            font-weight: 900;
+            color: #ff0033;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(255,0,51,0.5);
+        }
+
+        .step-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .step-content {
+            font-size: 18px;
+            color: #ddd;
+            text-align: center;
+            line-height: 1.8;
+            max-width: 320px;
+        }
+
+        .highlight-box {
+            background: rgba(255,0,51,0.1);
+            border-left: 4px solid #ff0033;
+            padding: 20px;
+            margin-top: 25px;
+            border-radius: 10px;
+        }
+
+        .quote {
+            font-size: 20px;
+            font-style: italic;
+            color: #ff0033;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        .example {
+            background: rgba(0,0,0,0.6);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 2px solid rgba(255,0,51,0.3);
+        }
+
+        .example-label {
+            color: #ff0033;
+            font-weight: 800;
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .example-text {
+            color: #fff;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .navigation {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-dot.active {
+            background: #ff0033;
+            width: 30px;
+            border-radius: 5px;
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 40px;
+            color: rgba(255,255,255,0.5);
+            cursor: pointer;
+            user-select: none;
+            z-index: 100;
+            padding: 20px;
+            transition: color 0.3s;
+        }
+
+        .arrow:hover {
+            color: #ff0033;
+        }
+
+        .arrow-left {
+            left: 10px;
+        }
+
+        .arrow-right {
+            right: 10px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #999;
+            margin-top: 10px;
+            text-transform: none;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                max-width: 100%;
+                border-radius: 0;
+            }
+
+            .slide {
+                padding: 40px 30px;
+            }
+
+            .slide h1 {
+                font-size: 36px;
+            }
+
+            .slide h2 {
+                font-size: 28px;
+            }
+
+            .step-number {
+                font-size: 60px;
+            }
+
+            .step-title {
+                font-size: 24px;
+            }
+
+            .step-content {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>Stop Making <span class="accent">Sense</span></h1>
+            <h1>Start <span class="accent">Connecting</span></h1>
+            <p style="margin-top: 30px; font-size: 20px;">The #1 Secret That Separates Great Game From "Meh"</p>
+            <p class="subtitle">Master the art of attraction in 10 powerful lessons</p>
+        </div>
+
+        <!-- Slide 2: The Wake Up Call -->
+        <div class="slide">
+            <h2>Here's What <span class="accent">Kills</span> Attraction</h2>
+            <p style="margin-bottom: 30px;">Most men don't even realize they're doing this...</p>
+            <div class="example">
+                <div class="example-label">❌ THE VIBE KILLER</div>
+                <div class="example-text">
+                    Her: "Where are you from?"<br>
+                    Him: "Chicago."<br><br>
+                    <span style="color: #666;">*Conversation dies*</span>
+                </div>
+            </div>
+            <p style="margin-top: 25px; font-size: 16px; color: #ff0033; font-weight: 600;">Sound familiar? Keep reading...</p>
+        </div>
+
+        <!-- Slide 3: The Stats -->
+        <div class="slide">
+            <h2>The <span class="accent">Brutal</span> Truth</h2>
+            <div class="stats-container">
+                <div class="stat-box">
+                    <div class="stat-number">90%</div>
+                    <div class="stat-label">Are Too Literal</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">0%</div>
+                    <div class="stat-label">Chemistry Created</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Missed Opportunities</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">Boring Answer = Done</div>
+                </div>
+            </div>
+            <p style="margin-top: 30px; font-size: 16px;">Being logical is costing you dates</p>
+        </div>
+
+        <!-- Slide 4: The Realization -->
+        <div class="slide">
+            <div class="step-number">01</div>
+            <div class="step-title">The Fatal Mistake</div>
+            <div class="step-content">
+                Men interact with women the same way they talk to other men - literal, factual, logical. But attraction doesn't work that way.
+            </div>
+            <div class="highlight-box">
+                <p style="font-size: 16px; color: #fff;">Every boring answer pushes her further away. Every playful response pulls her closer.</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: The Shift -->
+        <div class="slide">
+            <div class="step-number">02</div>
+            <div class="step-title">Connection > Logic</div>
+            <div class="step-content">
+                A well-timed joke or organic touch will ALWAYS take you further than sharing facts. Women don't need information - they need to feel something.
+            </div>
+            <p class="quote">"She doesn't care WHERE you're from. She cares HOW you make her feel."</p>
+        </div>
+
+        <!-- Slide 6: The Example -->
+        <div class="slide">
+            <h2>See The <span class="accent">Difference</span></h2>
+            <div class="example" style="margin-bottom: 15px;">
+                <div class="example-label">❌ BORING</div>
+                <div class="example-text">
+                    Her: "What are you doing tonight?"<br>
+                    Him: "Probably just staying in."
+                </div>
+            </div>
+            <div class="example">
+                <div class="example-label">✓ PLAYFUL</div>
+                <div class="example-text">
+                    Her: "What are you doing tonight?"<br>
+                    Him: "Trying to stay out of trouble... not going well so far" <span style="color: #ff0033;">*smirk*</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: The Strategy -->
+        <div class="slide">
+            <div class="step-number">03</div>
+            <div class="step-title">Every Question = Opportunity</div>
+            <div class="step-content">
+                Stop seeing her questions as requests for information. Start seeing them as invitations to flirt, create tension, and build attraction.
+            </div>
+            <div class="highlight-box">
+                <p style="font-size: 15px; color: #ddd;">The question isn't the point. Connection is the point.</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: The Fear -->
+        <div class="slide">
+            <div class="step-number">04</div>
+            <div class="step-title">Why Men Stay Boring</div>
+            <div class="step-content">
+                Fear. They're terrified of being seen as creepy, so they play it safe. But here's the truth: calibrated playfulness is NEVER creepy.
+            </div>
+            <p class="quote">Boring is worse than bold</p>
+        </div>
+
+        <!-- Slide 9: The Permission -->
+        <div class="slide">
+            <div class="step-number">05</div>
+            <div class="step-title">Touch & Timing</div>
+            <div class="step-content">
+                An organic touch on her arm while laughing. A playful nudge. These create more chemistry than a thousand logical conversations.
+            </div>
+            <div class="highlight-box">
+                <p style="font-size: 15px; color: #ddd;">It's not what you do - it's the energy behind it. Confident and calibrated beats hesitant every time.</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: The Mindset Shift -->
+        <div class="slide">
+            <h2>The <span class="accent">Game Changer</span></h2>
+            <p style="margin-bottom: 25px;">This is where everything changes...</p>
+            <div class="step-content">
+                You don't need to know where to draw every line. You need to stop being so afraid of crossing them that you never create any tension at all.
+            </div>
+            <p style="margin-top: 25px; font-size: 17px; color: #ff0033; font-weight: 700;">Risk the awkward. Create the spark.</p>
+        </div>
+
+        <!-- Slide 11: The Secret -->
+        <div class="slide">
+            <div class="step-number">06</div>
+            <div class="step-title">Sacrifice "Making Sense"</div>
+            <div class="step-content">
+                This is THE difference between great game and mediocre game. The willingness to sacrifice being logical in order to create connection.
+            </div>
+            <p class="quote">"Connection over correctness. Every single time."</p>
+        </div>
+
+        <!-- Slide 12: The Transformation -->
+        <div class="slide">
+            <h2>What <span class="accent">Changes</span> When You Apply This</h2>
+            <div style="text-align: left; max-width: 320px; margin-top: 30px;">
+                <p style="font-size: 17px; margin-bottom: 15px;">✓ Conversations become electric</p>
+                <p style="font-size: 17px; margin-bottom: 15px;">✓ Women lean in instead of checking out</p>
+                <p style="font-size: 17px; margin-bottom: 15px;">✓ You create attraction, not interviews</p>
+                <p style="font-size: 17px; margin-bottom: 15px;">✓ Flirting becomes natural and effortless</p>
+            </div>
+        </div>
+
+        <!-- Slide 13: Final Truth -->
+        <div class="slide">
+            <h1 style="font-size: 40px; line-height: 1.3;">The Men With <span class="accent">Great Game</span> Aren't Smarter</h1>
+            <p style="margin-top: 35px; font-size: 19px; line-height: 1.7;">
+                They're just willing to choose connection over making sense. They risk the playful moment instead of playing it safe.
+            </p>
+            <div class="highlight-box" style="margin-top: 30px;">
+                <p style="font-size: 17px; color: #fff; font-weight: 600;">That's it. That's the whole game.</p>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="arrow arrow-left">‹</div>
+        <div class="arrow arrow-right">›</div>
+        <div class="navigation">
+            <div class="nav-dot active"></div>
+            <div class="nav-dot"></div>
+            <div class="nav-dot"></div>
+            <div class="nav-dot"></div>
+            <div class="nav-dot"></div>
+            <div class="nav-dot"></div>
+            <div class="nav-dot"></div>
+            <div class="nav-dot"></div>
+            <div class="nav-dot"></div>
+            <div class="nav-dot"></div>
+            <div class="nav-dot"></div>
+            <div class="nav-dot"></div>
+            <div class="nav-dot"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.nav-dot');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        document.querySelector('.arrow-right').addEventListener('click', nextSlide);
+        document.querySelector('.arrow-left').addEventListener('click', prevSlide);
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                showSlide(currentSlide);
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Touch swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.querySelector('.container').addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.querySelector('.container').addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) nextSlide();
+            if (touchEndX - touchStartX > 50) prevSlide();
+        });
+    </script>
+</body>
+</html>
